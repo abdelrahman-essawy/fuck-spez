@@ -69,7 +69,7 @@ export default function Home() {
     >
       <div className={`flex flex-col gap-12 items-center ${font.variable}`}>
         <h1 className="text-7xl font-bold">Fuck <Link className='font-normal underline text-[#ff4500]' href={spez.link}>u/Spez</Link></h1>
-        <p className="text-3xl font-medium">{count}</p>
+        <p className="text-5xl font-medium">{count}</p>
       </div>
       <div
         className={`${startAnimation && "transition ease-in duration-75 scale-150" && (
