@@ -1,8 +1,18 @@
 "use client"
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { Inter, Cormorant_Garamond } from "@next/font/google"
 
-const images = {
+import { Nunito } from 'next/font/google'
+const font = Nunito({
+  display: 'swap',
+  preload: true,
+  subsets: ['latin', 'latin-ext'],
+  variable:'--font-nunito',
+})
+
+const images: Images = {
   HappySpez: {
     src: '/happy-spez-image.webp',
     alt: 'Happy Spez Image',
@@ -13,10 +23,11 @@ const images = {
   },
 };
 
-const spez = {
+const spez: Person= {
   name: 'Steve Huffman',
   images: images,
   description: 'CEO of Reddit',
+  link : 'https://www.reddit.com/user/spez',
 };
 
 const clickSound = new Audio('/click-sound.mp3');
@@ -24,7 +35,6 @@ const clickSound = new Audio('/click-sound.mp3');
 export default function Home() {
   const [image, setImage] = useState(images.HappySpez);
   const [startAnimation, setStartAnimation] = useState(false);
-  const [deg, setDeg] = useState(3);
   const [count, setCount] = useState(() => {
     const localCount = localStorage.getItem('count');
     return Number(localCount) || 0;
@@ -49,16 +59,16 @@ export default function Home() {
     } else {
       localStorage.setItem('count', String(count));
     }
-  }, []);
+  }, [count]);
 
   return (
     <main
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      className="flex min-h-screen flex-col items-center justify-between p-24"
+      className="flex min-h-screen flex-col items-center justify-between p-24 font-Nunito"
     >
-      <div className="flex flex-col gap-2 items-center">
-        <h1 className="text-7xl font-bold">Fuck Spez</h1>
+      <div className={`flex flex-col gap-12 items-center ${font.variable}`}>
+        <h1 className="text-7xl font-bold">Fuck <Link className='font-normal underline text-[#ff4500]' href={spez.link}>u/Spez</Link></h1>
         <p className="text-3xl font-medium">{count}</p>
       </div>
       <div

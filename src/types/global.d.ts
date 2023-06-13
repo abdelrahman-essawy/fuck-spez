@@ -12,4 +12,5 @@ type Person = {
   name: string;
   images: Images;
   description: string;
+  link: string;
 };
