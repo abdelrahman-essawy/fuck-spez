@@ -2,9 +2,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Inter, Cormorant_Garamond } from "@next/font/google"
-
 import { Nunito } from 'next/font/google'
+import Leaderboard from '@/components/Leaderboard';
 const font = Nunito({
   display: 'swap',
   preload: true,
@@ -30,7 +29,6 @@ const spez: Person= {
   link : 'https://www.reddit.com/user/spez',
 };
 
-const clickSound = new Audio('/click-sound.mp3');
 
 export default function Home() {
   const [image, setImage] = useState(images.HappySpez);
@@ -39,6 +37,9 @@ export default function Home() {
     const localCount = localStorage.getItem('count');
     return Number(localCount) || 0;
   });
+
+const clickSound = new Audio('/click-sound.mp3');
+
 
   const handleMouseDown = () => {
     setCount(prevCount => prevCount + 1);
@@ -52,7 +53,7 @@ export default function Home() {
     setImage(images.HappySpez);
   };
 
-  useEffect(() => {
+    useEffect(() => {
     const localCount = localStorage.getItem('count');
     if (localCount) {
       setCount(Number(localCount));
@@ -80,6 +81,7 @@ export default function Home() {
       >
         <Image src={image.src} alt={image.alt} width={500} height={500} />
       </div>
+      <Leaderboard />
     </main>
   );
 }
