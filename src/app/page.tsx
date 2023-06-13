@@ -31,7 +31,7 @@ const spez = {
 };
 
 export default function Home() {
-  const [image, setImage] = useState(images.SadSpez);
+  const [isSpezHappy, setIsSpezHappy] = useState(false);
   const [startAnimation, setStartAnimation] = useState(false);
   const [clickSound] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -43,7 +43,7 @@ export default function Home() {
 
   const handleMouseDown = () => {
     setCount(prevCount => prevCount + 1);
-    setImage(images.HappySpez);
+    setIsSpezHappy(true);
     clickSound && clickSound.play();
     if (typeof window !== 'undefined') {
       localStorage.setItem('count', String(count + 1));
@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   const handleMouseUp = () => {
-    setImage(images.SadSpez);
+    setIsSpezHappy(false);
   };
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function Home() {
       }
     }
   }, [count]);
-
+<Image priority src={images.SadSpez.src} alt={images.SadSpez.alt} width={500} height={500} quality={1}/> // to be optimized
   return (
     <main
       onMouseDown={handleMouseDown}
@@ -81,10 +81,13 @@ export default function Home() {
       <div
         className={`${
           startAnimation && 'transition ease-in duration-75 scale-150' && 
-          (image === images.SadSpez ? `scale-[102%]` : '')
+          (isSpezHappy ? `scale-[102%]` : '')
         }`}
       >
-        <Image src={image.src} alt={image.alt} width={500} height={500} />
+        {isSpezHappy ?
+          <Image priority src={images.HappySpez.src} alt={images.HappySpez.alt} width={500} height={500} quality={75} /> :
+          <Image priority src={images.SadSpez.src} alt={images.SadSpez.alt} width={500} height={500} quality={75}/> 
+          }
       </div>
       <Leaderboard />
     </main>
