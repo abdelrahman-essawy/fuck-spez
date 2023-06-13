@@ -1,6 +1,28 @@
+import Image from 'next/image'
 import React from 'react'
 
 function Leaderboard() {
+
+    const data = [
+        {
+            country: 'Egypt',
+            participants: 123,
+            count: 14231,
+            countryCode: 'eg',
+        },
+        {
+            country: 'United States',
+            participants: 231,
+            count: 23424,
+            countryCode: 'us',
+        },
+        {
+            country: 'Canada',
+            participants: 234,
+            count: 2435234,
+            countryCode: 'ca',
+        },
+    ]
   return (
       <div>
           
@@ -26,39 +48,35 @@ function Leaderboard() {
       </tr>
     </thead>
     <tbody>
-      <tr className="bg-white border-b">
-        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-          Egypt
-        </th>
-        <td className="px-6 py-4">
-          123
-        </td>
-        <td className="px-6 py-4">
-          14231
-        </td>
-      </tr>
-      <tr className="bg-white border-b">
-        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-            United States
-        </th>
-        <td className="px-6 py-4">
-          231
-        </td>
-        <td className="px-6 py-4">
-          23424
-        </td>
-      </tr>
-      <tr className="bg-white">
-        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-            Canada
-        </th>
-        <td className="px-6 py-4">
-          234
-        </td>
-        <td className="px-6 py-4">
-          2435234
-        </td>
-      </tr>
+                      {data.map((row, index) => ( 
+                          <tr key={index} className="bg-white">
+
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                  
+                                    <div className="flex items-center">
+                                      <div className="flex-shrink-0 w-10 h-10">
+                                          <Image
+                                              width={16}
+                                              height={12}
+                                              src={`https://flagcdn.com/16x12/${row.countryCode}.webp`}
+                                              alt={row.country}
+                                          />
+                                          
+                                        </div>
+                                        <div className="ml-4">
+                                            <div className="text-sm font-medium text-gray-900">{row.country}</div>
+                                            {/* <div className="text-sm text-gray-500">Optimization</div> */}
+                                        </div>
+                                  </div>
+                              </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="text-sm text-gray-900">{row.participants}</div>
+                                  {/* <div className="text-sm text-gray-500">Admin</div> */}
+                              </td>
+                              <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{row.count}</td>
+                          </tr>
+                      ))}
+                      
     </tbody>
   </table>
 </div>
