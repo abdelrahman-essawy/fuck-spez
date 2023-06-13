@@ -31,7 +31,7 @@ const spez = {
 };
 
 export default function Home() {
-  const [image, setImage] = useState(images.HappySpez);
+  const [image, setImage] = useState(images.SadSpez);
   const [startAnimation, setStartAnimation] = useState(false);
   const [clickSound] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -43,7 +43,7 @@ export default function Home() {
 
   const handleMouseDown = () => {
     setCount(prevCount => prevCount + 1);
-    setImage(images.SadSpez);
+    setImage(images.HappySpez);
     clickSound && clickSound.play();
     if (typeof window !== 'undefined') {
       localStorage.setItem('count', String(count + 1));
@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   const handleMouseUp = () => {
-    setImage(images.HappySpez);
+    setImage(images.SadSpez);
   };
 
   useEffect(() => {
@@ -70,10 +70,10 @@ export default function Home() {
     <main
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      className="flex min-h-screen flex-col items-center justify-between p-24 font-Nunito"
+      className="flex min-h-screen flex-col items-center justify-between md:p-8 pt-8 font-Nunito"
     >
       <div className={`flex flex-col gap-12 items-center ${font.variable}`}>
-        <h1 className="text-7xl font-bold">
+        <h1 className="md:text-7xl text-5xl font-bold">
           Fuck <Link className='font-normal underline text-[#ff4500]' href={spez.link}>u/Spez</Link>
         </h1>
         <p className="text-5xl font-medium">{count}</p>
