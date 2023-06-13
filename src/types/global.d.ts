@@ -14,3 +14,8 @@ type Person = {
   description: string;
   link: string;
 };
+
+type UserLocation = {
+  countryName: string;
+  countryCode: string;
+}

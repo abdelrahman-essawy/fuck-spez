@@ -30,9 +30,51 @@ const spez = {
   link: 'https://www.reddit.com/user/spez',
 };
 
+ const data = [
+    {
+      countryName: 'Egypt',
+      participants: 123,
+      count: 14231,
+      countryCode: 'eg',
+    },
+    {
+      countryName: 'United States',
+      participants: 231,
+      count: 23424,
+      countryCode: 'us',
+    },
+    {
+      countryName: 'Canada',
+      participants: 234,
+      count: 2435234,
+      countryCode: 'ca',
+      },
+        {
+      countryName: 'Egypt',
+      participants: 123,
+      count: 14231,
+      countryCode: 'eg',
+    },
+    {
+      countryName: 'United States',
+      participants: 231,
+      count: 23424,
+      countryCode: 'us',
+    },
+    {
+      countryName: 'Canada',
+      participants: 234,
+      count: 2435234,
+      countryCode: 'ca',
+      },
+    
+  ];
+
 export default function Home() {
   const [isSpezHappy, setIsSpezHappy] = useState(false);
   const [startAnimation, setStartAnimation] = useState(false);
+  const [userLocation, setUserLocation] = useState<null | UserLocation>(null);
+
   const [clickSound] = useState(() => {
     if (typeof window !== 'undefined') {
       return new Audio('/click-sound.mp3');
@@ -65,6 +107,16 @@ export default function Home() {
       }
     }
   }, [count]);
+  
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => setUserLocation({
+        countryName: data.country_name,
+        countryCode: data.country_code,
+      }));
+  }, []);
+
 <Image priority src={images.SadSpez.src} alt={images.SadSpez.alt} width={500} height={500} quality={1}/> // to be optimized
   return (
     <main
@@ -89,7 +141,7 @@ export default function Home() {
           <Image priority src={images.SadSpez.src} alt={images.SadSpez.alt} width={500} height={500} quality={75}/> 
           }
       </div>
-      <Leaderboard />
+      <Leaderboard data={data} userLocation={userLocation} />
     </main>
   );
 }
