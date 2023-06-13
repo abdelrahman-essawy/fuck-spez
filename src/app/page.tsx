@@ -1,9 +1,8 @@
 "use client"
-
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const images: Images = {
+const images = {
   HappySpez: {
     src: '/happy-spez-image.webp',
     alt: 'Happy Spez Image',
@@ -14,32 +13,63 @@ const images: Images = {
   },
 };
 
-const spez: Person = {
+const spez = {
   name: 'Steve Huffman',
   images: images,
   description: 'CEO of Reddit',
 };
 
+const clickSound = new Audio('/click-sound.mp3');
+
 export default function Home() {
-  const [image, setImage] = useState<ImageType>(images.HappySpez);
-  const [count, setCount] = useState<number>(0);
+  const [image, setImage] = useState(images.HappySpez);
+  const [startAnimation, setStartAnimation] = useState(false);
+  const [deg, setDeg] = useState(3);
+  const [count, setCount] = useState(() => {
+    const localCount = localStorage.getItem('count');
+    return Number(localCount) || 0;
+  });
 
-  const toggleImage = (prevImage: ImageType): ImageType => {
-    return prevImage === images.HappySpez ? images.SadSpez : images.HappySpez;
+  const handleMouseDown = () => {
+    setCount(prevCount => prevCount + 1);
+    setImage(images.SadSpez);
+    clickSound.play();
+    localStorage.setItem('count', String(count + 1));
+    setStartAnimation(true);
   };
 
-  const handleImageClick = () => {
-    setCount(prevCount => ++prevCount);
-    setImage(toggleImage);
+  const handleMouseUp = () => {
+    setImage(images.HappySpez);
   };
+
+  useEffect(() => {
+    const localCount = localStorage.getItem('count');
+    if (localCount) {
+      setCount(Number(localCount));
+    } else {
+      localStorage.setItem('count', String(count));
+    }
+  }, []);
 
   return (
-    <main onMouseDown={handleImageClick} className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      className="flex min-h-screen flex-col items-center justify-between p-24"
+    >
       <div className="flex flex-col gap-2 items-center">
         <h1 className="text-7xl font-bold">Fuck Spez</h1>
         <p className="text-3xl font-medium">{count}</p>
       </div>
-      <Image src={image.src} alt={image.alt} width={500} height={500} />
+      <div
+        className={`${startAnimation && "transition ease-in duration-75 scale-150" && (
+          image === images.SadSpez ?
+          `scale-[102%]` :
+            ``
+        )}`}
+      >
+        <Image src={image.src} alt={image.alt} width={500} height={500} />
+      </div>
     </main>
   );
 }
